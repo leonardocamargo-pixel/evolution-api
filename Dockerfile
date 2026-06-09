@@ -48,8 +48,7 @@ COPY --from=builder /evolution/node_modules ./node_modules
 COPY --from=builder /evolution/dist ./dist
 COPY --from=builder /evolution/prisma ./prisma
 COPY --from=builder /evolution/manager ./manager
-COPY --from=builder /evolution/public ./public
-COPY --from=builder /evolution/.env ./.env
+COPY --from=builder /evolution/public ./publicRUN echo "DATABASE_PROVIDER=postgresql" > ./.env && echo "DATABASE_CONNECTION_URI=postgresql://evolution_db_eui9_user:7bpBygB8GO8zzAtHTY2cuTSxzlUhTwAa@dpg-d8jl1igg4nts73cfern0-a.oregon-postgres.render.com:5432/evolution_db_eui9" >> ./.env
 COPY --from=builder /evolution/Docker ./Docker
 COPY --from=builder /evolution/runWithProvider.js ./runWithProvider.js
 COPY --from=builder /evolution/tsup.config.ts ./tsup.config.ts
