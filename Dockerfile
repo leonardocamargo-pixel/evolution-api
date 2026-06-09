@@ -18,7 +18,8 @@ RUN npm ci --silent
 COPY ./src ./src
 COPY ./public ./public
 COPY ./prisma ./prisma
-COPY ./manager ./managerRUN echo "DATABASE_PROVIDER=postgresql" > ./.env
+COPY ./manager ./manager
+RUN echo "DATABASE_PROVIDER=postgresql" > ./.env
 RUN echo "DATABASE_CONNECTION_URI=postgresql://evolution_db_eui9_user:7bpBygB8GO8zzAtHTY2cuTSxzlUhTwAa@dpg-d8jl1igg4nts73cfern0-a.oregon-postgres.render.com:5432/evolution_db_eui9" >> ./.env
 COPY ./runWithProvider.js ./
 
