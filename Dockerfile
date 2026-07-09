@@ -13,7 +13,8 @@ COPY ./src ./src
 COPY ./public ./public
 COPY ./prisma ./prisma
 COPY ./manager ./manager
-RUN echo "DATABASE_PROVIDER=postgresql" > ./.env
+RUN echo "DATABASE_PROVIDER=postgresql" > ./.env && \
+    echo "DATABASE_CONNECTION_URI=postgresql://user:pass@localhost:5432/db?schema=public" >> ./.env
 COPY ./runWithProvider.js ./
 COPY ./Docker ./Docker
 RUN chmod +x ./Docker/scripts/* && dos2unix ./Docker/scripts/*
