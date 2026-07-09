@@ -20,7 +20,9 @@ COPY ./Docker ./Docker
 RUN chmod +x ./Docker/scripts/* && dos2unix ./Docker/scripts/*
 RUN ./Docker/scripts/generate_database.sh
 RUN npm run build
+
 FROM node:24-alpine AS final
+ARG DATABASE_CONNECTION_URI
 RUN apk update && \
     apk add tzdata ffmpeg bash openssl
 ENV TZ=America/Sao_Paulo
@@ -36,6 +38,8 @@ COPY --from=builder /evolution/public ./public
 COPY --from=builder /evolution/Docker ./Docker
 COPY --from=builder /evolution/runWithProvider.js ./runWithProvider.js
 COPY --from=builder /evolution/tsup.config.ts ./tsup.config.ts
+RUN echo "DATABASE_PROVIDER=postgresql" > ./.env && \
+    echo "DATABASE_CONNECTION_URI=${DATABASE_CONNECTION_URI}" >> ./.env
 ENV DOCKER_ENV=true
 EXPOSE 8080
 ENTRYPOINT ["/bin/bash", "-c", ". ./Docker/scripts/deploy_database.sh && npm run start:prod" ]
