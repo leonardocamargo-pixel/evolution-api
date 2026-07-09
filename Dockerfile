@@ -13,7 +13,7 @@ COPY ./src ./src
 COPY ./public ./public
 COPY ./prisma ./prisma
 COPY ./manager ./manager
-RUN touch ./.env
+RUN echo "DATABASE_PROVIDER=postgresql" > ./.env
 COPY ./runWithProvider.js ./
 COPY ./Docker ./Docker
 RUN chmod +x ./Docker/scripts/* && dos2unix ./Docker/scripts/*
